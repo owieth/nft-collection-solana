@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
+import styles from '../styles/Home.module.css'
 
 type Event = "connect" | "disconnect";
 
@@ -39,27 +40,26 @@ const Home: NextPage = () => {
     phantom?.disconnect();
   }
 
-  return (
-    <>
-      {!connected && (
-        <button
-          onClick={connectHandler}
-          className="bg-purple-500 py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white whitespace-nowrap hover:bg-opacity-75"
-        >
-          Connect to Phantom
-        </button>
-      )}
-
-      {connected && (
-        <button
-          onClick={disconnectHandler}
-          className="py-2 px-4 border border-purple-700 rounded-md text-sm font-medium text-purple-700 whitespace-nowrap hover:bg-purple-200"
-        >
-          Disconnect from Phantom
-        </button>
-      )}
-    </>
+  const renderNotConnectedContainer = () => (
+    <button
+      className={`${styles['cta-button']} ${styles['connect-wallet-button']}`}
+      onClick={connectHandler}
+    >
+      Connect to Wallet
+    </button>
   );
-}
+
+  return (
+    <div className={styles.App}>
+      <div className={styles.container}>
+        <div className="header-container">
+          <p className={styles.header}>🍭 Candy Drop</p>
+          <p className={styles['sub-text']}>NFT drop machine with fair mint</p>
+          {!connected && renderNotConnectedContainer()}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Home
